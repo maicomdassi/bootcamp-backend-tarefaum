@@ -1,0 +1,3 @@
+INSERT INTO tb_client (name, cpf, income, birth_Date, children,created_At) VALUES ('Michael', '01890987655', 2500.0, TIMESTAMP WITH TIME ZONE '2020-07-13T20:50:07.12345Z', 1,NOW())
+INSERT INTO tb_client (name, cpf, income, birth_Date, children,created_At) VALUES ('Joao', '01890987123', 3500.0, TIMESTAMP WITH TIME ZONE '2020-07-13T20:50:07.12345Z', 1,NOW())
+INSERT INTO tb_client (name, cpf, income, birth_Date, children,created_At) VALUES ('Maria', '01890980987', 4500.0, TIMESTAMP WITH TIME ZONE '2020-07-13T20:50:07.12345Z', 1,NOW())
