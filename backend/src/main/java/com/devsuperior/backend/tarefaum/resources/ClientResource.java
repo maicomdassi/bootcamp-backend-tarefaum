@@ -1,26 +1,35 @@
 package com.devsuperior.backend.tarefaum.resources;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devsuperior.backend.tarefaum.entities.Client;
+import com.devsuperior.backend.tarefaum.dto.ClientDTO;
+import com.devsuperior.backend.tarefaum.services.ClientService;
 
 @RestController
 @RequestMapping(value = "clients")
 public class ClientResource {
 
+	@Autowired
+	private ClientService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Client>> findAll(){
-		List<Client> list = new ArrayList<>();
-		list.add(new Client(1L,"Michael","12345676500",234.0,Instant.now(),2));
-		list.add(new Client(2L,"Joao","12345676500",234.0,Instant.now(),2));
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<Page<ClientDTO>> findAll(
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "linesPerPage", defaultValue = "5") Integer linesPerPage,
+			@RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction)
+	{
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		
+		Page<ClientDTO> p = service.findAllPaged(pageRequest); 
+		return ResponseEntity.ok().body(p);
 	}
 }
